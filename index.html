@@ -12,17 +12,53 @@ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:en
 @media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1f100c;--ink:#f3e6d0;--soft:#c9ab97;--tan:#34201a;--line:rgba(243,230,208,.2);--wine:#a8323a;color-scheme:dark}}
 :root[data-theme="dark"]{--bg:#1f100c;--ink:#f3e6d0;--soft:#c9ab97;--tan:#34201a;--line:rgba(243,230,208,.2);--wine:#a8323a;color-scheme:dark}
 *,*::before,*::after{box-sizing:border-box}
-html{height:100%;scroll-padding-top:80px}
+html{height:100%;scroll-padding-top:80px;scroll-behavior:smooth}
 body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font:400 1rem/1.7 Karla,system-ui,sans-serif;overflow-x:hidden}
 h1,h2,h3,h4{font-family:"Playfair Display",Georgia,serif;font-weight:500;line-height:1.2;margin:0}
 p{margin:0}a{color:inherit}
 :focus-visible{outline:2px solid var(--wine);outline-offset:3px}
 .w{width:min(1120px,100% - 2.5rem);margin-inline:auto}
 .defs{position:absolute;width:0;height:0}
-.btn{display:inline-block;background:var(--wine);color:#fbefe0;text-decoration:none;padding:.75rem 1.7rem;border-radius:6px;border:0;font:500 .98rem Karla,sans-serif;cursor:pointer;transition:transform .25s cubic-bezier(.3,1.4,.5,1),filter .3s}
-.btn:hover{transform:translateY(-2px);filter:brightness(1.15)}.btn:active{transform:translateY(1px) scale(.98)}
+.btn{display:inline-block;background:var(--wine);color:#fbefe0;text-decoration:none;padding:.75rem 1.7rem;border-radius:6px;border:0;font:500 .98rem Karla,sans-serif;cursor:pointer;transition:transform .25s cubic-bezier(.3,1.4,.5,1),filter .3s;position:relative;overflow:hidden;will-change:transform}
+.btn::before{content:"";position:absolute;inset:0;background:linear-gradient(120deg,transparent 35%,rgba(255,255,255,.38),transparent 65%);transform:translateX(-130%);transition:transform .65s cubic-bezier(.2,.8,.2,1);pointer-events:none}
+.btn:hover::before{transform:translateX(130%)}
+.btn:hover{filter:brightness(1.15)}.btn:active{transform:scale(.97)!important}
 .btn.t{background:var(--tan);color:var(--ink)}
 .btn.full{display:block;text-align:center;width:100%}
+
+/* scroll reveal */
+.reveal{opacity:0;transform:translateY(46px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:translateY(0)}
+.reveal.r1{transition-delay:.06s}.reveal.r2{transition-delay:.14s}.reveal.r3{transition-delay:.22s}.reveal.r4{transition-delay:.3s}
+
+/* hover / tilt / parallax helpers */
+.ph{transition:transform .5s cubic-bezier(.2,.8,.2,1),box-shadow .5s}
+.card:hover .ph,.row .ph:hover{box-shadow:0 26px 46px -18px rgba(20,10,6,.4)}
+[data-sp]{will-change:transform;transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.bx{transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s}
+.bx:hover{transform:translateY(-7px);box-shadow:0 20px 38px -18px rgba(58,26,18,.32)}
+.cats button{transition:transform .3s cubic-bezier(.3,1.4,.5,1),background .3s,color .3s,border-color .3s}
+.cats button:hover{background:var(--wine);border-color:var(--wine);color:#fbefe0}
+.logo svg{transition:transform .55s cubic-bezier(.34,1.8,.4,1)}
+.logo:hover svg{transform:rotate(26deg) scale(1.12)}
+header{transition:box-shadow .4s}
+header.sc{box-shadow:0 14px 30px -16px rgba(0,0,0,.5)}
+nav ul a{position:relative}
+nav ul a::after{content:"";position:absolute;left:.7rem;right:.7rem;bottom:.18rem;height:2px;background:var(--tan);transform:scaleX(0);transform-origin:left;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+nav ul a:hover::after,nav ul a.on::after{transform:scaleX(1)}
+
+/* custom cursor (fine pointers only) */
+#cur{position:fixed;left:0;top:0;width:14px;height:14px;border-radius:50%;background:var(--wine);pointer-events:none;z-index:200;transform:translate(-50%,-50%);transition:width .25s,height .25s,background-color .25s,border-color .25s,opacity .3s;opacity:0}
+body.ready #cur{opacity:.9}
+#cur.big{width:48px;height:48px;background:rgba(107,15,20,.14);border:1.5px solid var(--wine)}
+@media not all and (hover:hover) and (pointer:fine){#cur{display:none!important}}
+
+@media(prefers-reduced-motion:reduce){
+ .reveal{opacity:1;transform:none;transition:none}
+ .btn::before{display:none}
+ [data-sp]{transform:none!important}
+ #cur{display:none!important}
+}
 
 /* intro */
 #intro{position:fixed;inset:0;z-index:100;background:var(--bg);display:grid;place-items:end center;padding-bottom:7vh;transition:opacity 1.1s ease .2s;cursor:pointer}
@@ -87,7 +123,7 @@ h2.c{text-align:center;font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:2.2rem}
 
 /* menu */
 .cats{display:flex;justify-content:center;gap:1.2rem;flex-wrap:wrap;margin-bottom:3rem}
-.cats button{background:var(--tan);border:2px solid #cfae80;border-radius:10px;padding:.9rem 1.4rem;min-width:130px;color:var(--ink);font:500 .95rem Karla,sans-serif;cursor:pointer;display:grid;gap:.3rem;justify-items:center;transition:transform .3s cubic-bezier(.3,1.4,.5,1)}
+.cats button{background:var(--tan);border:2px solid #cfae80;border-radius:10px;padding:.9rem 1.4rem;min-width:130px;color:var(--ink);font:500 .95rem Karla,sans-serif;cursor:pointer;display:grid;gap:.3rem;justify-items:center}
 .cats button:hover{transform:translateY(-3px)}.cats svg{width:52px;height:38px}
 h3.cat{text-align:center;font-size:1.5rem;margin:3rem 0 1.5rem}
 .card{text-decoration:none;display:block;position:relative;text-align:center;transition:transform .3s cubic-bezier(.3,1.4,.5,1)}
@@ -152,7 +188,7 @@ footer a{display:block;text-decoration:none;opacity:.8;margin-bottom:.3rem}foote
  .map{aspect-ratio:1.3}
  .ol{grid-template-columns:1fr}
 }
-@media(prefers-reduced-motion:reduce){#petals{display:none}*{animation-duration:.01ms!important;animation-delay:0s!important}}
+@media(prefers-reduced-motion:reduce){#petals{display:none}*{animation-duration:.01ms!important;animation-delay:0s!important}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
@@ -184,6 +220,8 @@ footer a{display:block;text-decoration:none;opacity:.8;margin-bottom:.3rem}foote
 <script>
 const WA="6281234567890"; /* ganti nomor WhatsApp asli */
 const NS="http://www.w3.org/2000/svg",$=s=>document.querySelector(s),app=$("#app");
+const reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
+const fine=matchMedia("(hover:hover) and (pointer:fine)").matches && !reduce;
 const P=[["M150 500C150 430 172 380 160 320C152 270 185 230 215 180",8],["M162 340C210 320 250 300 310 250C335 230 355 200 372 160",4.5],["M158 300C120 280 90 250 55 200C40 180 30 150 28 120",4.5],["M205 200C230 170 240 130 262 95C272 78 290 60 300 40",3.5],["M300 262C320 270 345 268 380 250",2.5],["M100 238C85 215 90 190 70 160",2.5],["M240 130C270 128 295 118 320 100",2.5],["M175 252C150 235 150 205 130 185",2.5]];
 function grow(svg,anim,n){
  svg.setAttribute("viewBox","-20 -10 440 520");let s=11;const r=()=>(s=s*16807%2147483647)/2147483647;
@@ -211,7 +249,7 @@ const D=[
 ["ebi-furai","Others","Ebi Furai",17000,4.6,"Udang berbalut tepung panko, digoreng hingga keemasan."]
 ].map((d,i)=>({s:d[0],c:d[1],n:d[2],p:d[3],r:d[4],d:d[5],k:C[i%6]}));
 const rp=n=>"Rp"+n.toLocaleString("id-ID");
-const img=(k,cls="")=>`<div class="ph ${cls}"><svg aria-hidden="true" viewBox="0 0 76 60" style="--a:${k[0]};--b:${k[1]};--c:${k[2]}"><use href="#bx"/></svg><small>foto menu</small></div>`;
+const img=(k,cls="",sp="")=>`<div class="ph ${cls}"${sp?` data-sp="${sp}"`:""}><svg aria-hidden="true" viewBox="0 0 76 60" style="--a:${k[0]};--b:${k[1]};--c:${k[2]}"><use href="#bx"/></svg><small>foto menu</small></div>`;
 const card=m=>`<a class="card" href="#/menu/${m.s}"><span class="rt">&#9733; ${m.r}</span>${img(m.k)}<h4>${m.n}</h4><span>${rp(m.p)}</span></a>`;
 const rev=[["Joseph (MRA)","Chicken teriyaki-nya enak, sausnya pas dan nasinya hangat."],["Dianti (ARS)","Harganya masuk akal dan porsinya bikin kenyang sampai sore."],["Lucky (MBP)","Bumbunya terasa dan penjualnya ramah. Pasti balik lagi."]];
 const stars="&#9733;&#9733;&#9733;&#9733;&#9733;";
@@ -220,28 +258,28 @@ const ban=(t,c="",extra="")=>`<div class="ban ${c}"><div class="w"><h1>${t}</h1>
 
 /* pages */
 const R={
-home:()=>`<div class="ban big"><div id="slot" class="lt" aria-hidden="true"></div><div class="w"><h1 style="font-size:clamp(2.4rem,5vw,3.8rem)">Sakura Bento</h1><p>Bento hangat khas Jepang dan Nusantara, langsung dari kantin Vokasi UI.</p><a class="btn t" href="#/menu">Klik untuk jelajahi menu</a></div></div>
-<section><svg class="sprig l tree still" data-g="5" aria-hidden="true"></svg><div class="w z"><h2 class="c">Our Story</h2>
- <div class="row"><div><h3>Taste of Us</h3><p>Setiap cerita besar punya awal. Sakura Bento lahir dari pengalaman lima tahun sang pemilik sebagai asisten chef, lalu tumbuh bersama para pelanggan yang percaya pada rasa kami. Mau tahu cerita di balik dapurnya?</p><a class="btn t" href="#/about">Read our Full Story &gt;</a></div>${img(C[3])}</div></div></section>
-<section class="wood"><div class="w"><div class="row">${img(C[0])}<div><h3>Our Menu</h3><p>Ada yang lebih menarik dari sekadar penasaran. Lihat apa saja yang tersedia di meja kami hari ini.</p><div class="tr"><a class="btn" href="#/menu">Explore Our Creations &gt;</a></div></div></div></div></section>
-<section><svg class="sprig r tree still" data-g="5" aria-hidden="true"></svg><div class="w z"><h2 class="c">What Are They Saying?</h2>${revs()}</div></section>`,
+home:()=>`<div class="ban big"><div id="slot" class="lt" data-sp="7" aria-hidden="true"></div><div class="w"><h1 style="font-size:clamp(2.4rem,5vw,3.8rem)">Sakura Bento</h1><p>Bento hangat khas Jepang dan Nusantara, langsung dari kantin Vokasi UI.</p><a class="btn t" href="#/menu">Klik untuk jelajahi menu</a></div></div>
+<section><svg class="sprig l tree still" data-g="5" data-sp="16" aria-hidden="true"></svg><div class="w z"><h2 class="c">Our Story</h2>
+ <div class="row"><div><h3>Taste of Us</h3><p>Setiap cerita besar punya awal. Sakura Bento lahir dari pengalaman lima tahun sang pemilik sebagai asisten chef, lalu tumbuh bersama para pelanggan yang percaya pada rasa kami. Mau tahu cerita di balik dapurnya?</p><a class="btn t" href="#/about">Read our Full Story &gt;</a></div>${img(C[3],"","9")}</div></div></section>
+<section class="wood"><div class="w"><div class="row">${img(C[0],"","-9")}<div><h3>Our Menu</h3><p>Ada yang lebih menarik dari sekadar penasaran. Lihat apa saja yang tersedia di meja kami hari ini.</p><div class="tr"><a class="btn" href="#/menu">Explore Our Creations &gt;</a></div></div></div></div></section>
+<section><svg class="sprig r tree still" data-g="5" data-sp="-16" aria-hidden="true"></svg><div class="w z"><h2 class="c">What Are They Saying?</h2>${revs()}</div></section>`,
 
 about:()=>`${ban("About Us")}
-<section><svg class="sprig l tree still" data-g="5" aria-hidden="true"></svg><div class="w z"><div class="row"><div><h3>Our Heritage</h3><p>Sakura Bento hadir di lingkungan Vokasi UI pada 2014, berawal dari pengalaman pemiliknya yang sudah lama berkecimpung di dunia kuliner. Sebelum membuka usaha sendiri, beliau bekerja sekitar lima tahun sebagai asisten chef di HokBen. Pengalaman itu menjadi bekal memahami cara mengolah makanan, menyiapkan menu, dan menjalankan usaha di bidang makanan.</p><p>Usaha ini sempat berjalan di Margonda, Depok, lalu pindah ke Vokasi UI karena biaya sewa yang tinggi.</p></div>${img(C[4])}</div></div></section>
-<section style="padding-top:0"><div class="w"><div class="row rev"><div><h3>The Passion of Our Founder</h3><p>Di balik senyum pelanggan yang puas ada sosok yang cintanya pada makanan menjaga dapur tetap hidup. Kami mengutamakan kualitas dan pelayanan, serta terbuka pada masukan, misalnya menyesuaikan jumlah saus sesuai permintaan.</p></div>${img(C[1])}</div></div></section>
-<section><svg class="sprig r tree still" data-g="5" aria-hidden="true"></svg><div class="w z"><h2 class="c">What Makes Us Special</h2><div class="g3 sc3">
+<section><svg class="sprig l tree still" data-g="5" data-sp="16" aria-hidden="true"></svg><div class="w z"><div class="row"><div><h3>Our Heritage</h3><p>Sakura Bento hadir di lingkungan Vokasi UI pada 2014, berawal dari pengalaman pemiliknya yang sudah lama berkecimpung di dunia kuliner. Sebelum membuka usaha sendiri, beliau bekerja sekitar lima tahun sebagai asisten chef di HokBen. Pengalaman itu menjadi bekal memahami cara mengolah makanan, menyiapkan menu, dan menjalankan usaha di bidang makanan.</p><p>Usaha ini sempat berjalan di Margonda, Depok, lalu pindah ke Vokasi UI karena biaya sewa yang tinggi.</p></div>${img(C[4],"","9")}</div></div></section>
+<section style="padding-top:0"><div class="w"><div class="row rev"><div><h3>The Passion of Our Founder</h3><p>Di balik senyum pelanggan yang puas ada sosok yang cintanya pada makanan menjaga dapur tetap hidup. Kami mengutamakan kualitas dan pelayanan, serta terbuka pada masukan, misalnya menyesuaikan jumlah saus sesuai permintaan.</p></div>${img(C[1],"","-9")}</div></div></section>
+<section><svg class="sprig r tree still" data-g="5" data-sp="-16" aria-hidden="true"></svg><div class="w z"><h2 class="c">What Makes Us Special</h2><div class="g3 sc3">
  <div class="bx sc"><svg viewBox="0 0 76 60"><use href="#bx"/></svg><h4>Delicious &amp; Affordable</h4><p>Rasa enak dengan harga bersahabat untuk mahasiswa.</p></div>
  <div class="bx sc"><svg viewBox="-20 -20 40 40"><circle r="16" fill="#6b0f14"/><use href="#fl" transform="scale(1.6)"/></svg><h4>Made for Your Day</h4><p>Disiapkan segar setiap hari untuk menemani aktivitasmu.</p></div>
  <div class="bx sc"><svg viewBox="0 0 80 80"><circle cx="40" cy="26" r="13" fill="#e9b88f"/><path d="M14 74c2-22 14-30 26-30s24 8 26 30z" fill="#6b0f14"/></svg><h4>Friendly &amp; Fresh</h4><p>Pelayanan ramah dan terbuka terhadap masukan.</p></div></div></div></section>`,
 
 menu:()=>{const cs=[["Bento","Bento Package"],["Donburi","Donburi"],["Others","Others"]];
- return `${ban("Let's Explore the Menu")}<section><svg class="sprig l tree still" data-g="5" aria-hidden="true"></svg><div class="w z"><h2 class="c">Choose Your Fave!</h2>
+ return `${ban("Let's Explore the Menu")}<section><svg class="sprig l tree still" data-g="5" data-sp="14" aria-hidden="true"></svg><div class="w z"><h2 class="c">Choose Your Fave!</h2>
  <div class="cats">${cs.map(c=>`<button data-go="c-${c[0]}"><svg viewBox="0 0 76 60"><use href="#bx"/></svg>${c[0]}</button>`).join("")}</div>
  ${cs.map(c=>`<h3 class="cat" id="c-${c[0]}">${c[1]}</h3><div class="g3">${D.filter(m=>m.c===c[0]).map(card).join("")}</div>`).join("")}</div></section>`},
 
 detail:m=>{const o=D.filter(x=>x.s!==m.s&&x.c===m.c).concat(D.filter(x=>x.c!==m.c)).slice(0,3);
  return `<div class="crumb"><div class="w"><a href="#/">Home</a> / <a href="#/menu">Menu</a> / ${m.n}</div></div>
- <section><svg class="sprig t tree still" data-g="5" aria-hidden="true"></svg><div class="w z"><div class="dt">${img(m.k)}<div>
+ <section><svg class="sprig t tree still" data-g="5" data-sp="10" aria-hidden="true"></svg><div class="w z"><div class="dt">${img(m.k)}<div>
  <h1>${m.n}</h1><p style="color:var(--soft);margin-top:.6rem">${m.d}</p>
  <div class="pr"><b>${rp(m.p)}</b><span class="rt">&#9733; ${m.r}</span></div>
  <a class="btn full" target="_blank" rel="noopener" href="https://wa.me/${WA}?text=${encodeURIComponent("Halo Sakura Bento, saya mau pesan "+m.n)}">Order this</a>
@@ -250,7 +288,7 @@ detail:m=>{const o=D.filter(x=>x.s!==m.s&&x.c===m.c).concat(D.filter(x=>x.c!==m.
  <h2 class="c" style="margin-top:3.5rem">Reviews</h2>${revs()}
  <h2 class="c" style="margin-top:3.5rem">Other Menu Recommendation</h2><div class="g3 q" style="grid-template-columns:repeat(3,1fr)">${o.map(card).join("")}</div></div></section>`},
 
-contact:()=>`${ban("Contact Us")}<section><svg class="sprig r tree still" data-g="5" aria-hidden="true"></svg><div class="w z">
+contact:()=>`${ban("Contact Us")}<section><svg class="sprig r tree still" data-g="5" data-sp="-14" aria-hidden="true"></svg><div class="w z">
  <h2 class="c">Message Form</h2>
  <form id="f" class="fm" novalidate>
   <div class="L"><label>Subject<input id="fs" placeholder="Judul pesan"></label>
@@ -267,6 +305,39 @@ contact:()=>`${ban("Contact Us")}<section><svg class="sprig r tree still" data-g
  <p style="text-align:center;margin-top:1rem;font-weight:500">Map Kantin Vokasi</p></div></section>`
 };
 
+/* scroll reveal */
+const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting){en.target.classList.add("in");io.unobserve(en.target)}}),{threshold:.15,rootMargin:"0px 0px -8% 0px"});
+function initReveal(root){
+ root.querySelectorAll(".row,.bx,.card,.sc,h2.c,.dt,.map,.fm,.wa").forEach((el,i)=>{
+  el.classList.add("reveal","r"+((i%4)+1));
+  if(reduce)el.classList.add("in");else io.observe(el)})}
+
+/* parallax + sticky header shade */
+function onScroll(){
+ document.querySelectorAll("[data-sp]").forEach(el=>{
+  const sp=parseFloat(el.dataset.sp),r=el.getBoundingClientRect(),vh=innerHeight||document.documentElement.clientHeight;
+  const prog=(vh-r.top)/(vh+r.height);
+  el.style.transform=`translate3d(0,${((prog-.5)*sp).toFixed(1)}px,0)`});
+ const hd=$("header");if(hd)hd.classList.toggle("sc",scrollY>40)}
+let tking=false;
+if(!reduce)addEventListener("scroll",()=>{if(!tking){requestAnimationFrame(()=>{onScroll();tking=false});tking=true}},{passive:true});
+
+/* custom cursor + magnetic buttons + tilt (fine pointers only) */
+if(fine){
+ const cur=document.createElement("div");cur.id="cur";document.body.append(cur);
+ addEventListener("pointermove",e=>{
+  cur.style.left=e.clientX+"px";cur.style.top=e.clientY+"px";
+  const b=e.target.closest?.(".btn");
+  if(b){const r=b.getBoundingClientRect();b.style.transform=`translate(${((e.clientX-r.left)/r.width-.5)*16}px,${((e.clientY-r.top)/r.height-.5)*16}px)`}
+  const p=e.target.closest?.(".ph:not([data-sp])");
+  if(p){const r=p.getBoundingClientRect();const rx=((e.clientY-r.top)/r.height-.5)*-9,ry=((e.clientX-r.left)/r.width-.5)*9;p.style.transform=`perspective(700px) rotateX(${rx}deg) rotateY(${ry}deg) scale(1.03)`}});
+ document.addEventListener("pointerover",e=>{if(e.target.closest?.("a,button,.btn,.card,.cats button"))cur.classList.add("big")});
+ document.addEventListener("pointerout",e=>{
+  const t=e.target.closest?.("a,button,.btn,.card,.cats button");
+  if(t&&!t.contains(e.relatedTarget))cur.classList.remove("big");
+  const b=e.target.closest?.(".btn");if(b&&!b.contains(e.relatedTarget))b.style.transform="";
+  const p=e.target.closest?.(".ph:not([data-sp])");if(p&&!p.contains(e.relatedTarget))p.style.transform=""})}
+
 /* router */
 let first=true;
 function route(){
@@ -279,6 +350,7 @@ function route(){
  const f=$("#f");if(f)f.onsubmit=e=>{e.preventDefault();const n=$("#fn").value.trim(),t=$("#fm").value.trim();
   $("#e1").textContent=n?"":"Isi nama dulu.";$("#e2").textContent=t?"":"Tulis pesannya dulu.";
   if(n&&t)window.open(`https://wa.me/${WA}?text=${encodeURIComponent(`Halo Sakura Bento. Subject: ${$("#fs").value}. Nama: ${n}. Email: ${$("#fe").value}. Telp: ${$("#fp").value}. Pesan: ${t}`)}`,"_blank","noopener")};
+ initReveal(app);onScroll();
  if(!first)scrollTo(0,0);first=false;
  nv.classList.remove("open");bt.setAttribute("aria-expanded",false)}
 const bt=$("#bt"),nv=$("#nv");
@@ -291,7 +363,6 @@ for(let i=0;i<16;i++){const e=document.createElement("i"),st=e.style;st.setPrope
 
 /* intro */
 const tree=$("#tree"),intro=$("#intro"),root=document.documentElement;
-const reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
 function settle(){const sl=$("#slot");
  if(sl){tree.className="tree still";tree.removeAttribute("style");sl.append(tree)}else tree.remove();
  root.style.overflow="";document.body.classList.add("ready");intro.remove()}
