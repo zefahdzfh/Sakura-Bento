@@ -108,88 +108,564 @@ h2.c{text-align:center;font-size:clamp(1.5rem,3vw,2.1rem);margin-bottom:2.2rem}
 .row p{color:var(--soft);margin-bottom:1.3rem}
 .row.rev>:first-child{order:2}
 .ph{aspect-ratio:4/3;border-radius:8px;background:linear-gradient(145deg,#d9b88f,#8a5a3c);display:grid;place-items:center;overflow:hidden;position:relative}
-.ph svg{width:62%;height:auto}
-.ph small{position:absolute;left:.7rem;bottom:.5rem;color:rgba(255,255,255,.8);font-size:.75rem}
-.wood{background:repeating-linear-gradient(92deg,#ecd0a4 0 14px,#e6c99b 14px 15px,#efd5ab 15px 38px,#e8cc9f 38px 39px)}
-.wood .row{padding-block:.5rem}
-.wood h3{font-size:1.7rem;text-align:right}.wood p{text-align:right;margin-left:auto;max-width:34ch}.wood .tr{text-align:right}
-.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem}
-.bx{background:var(--tan);border-radius:8px;padding:1.2rem}
-.bx b{font-family:"Playfair Display",serif;font-weight:500}
-.st{color:#c98a14;letter-spacing:.1em;font-size:.85rem;margin:.2rem 0 .4rem}
-.bx p{font-size:.92rem;color:var(--soft)}
-.sc{text-align:center;padding:1.8rem 1.2rem}.sc svg{width:84px;height:84px;margin-bottom:.6rem}.sc h4{font-size:1.1rem}
-.sc p{margin-top:.4rem}
 
-/* menu */
-.cats{display:flex;justify-content:center;gap:1.2rem;flex-wrap:wrap;margin-bottom:3rem}
-.cats button{background:var(--tan);border:2px solid #cfae80;border-radius:10px;padding:.9rem 1.4rem;min-width:130px;color:var(--ink);font:500 .95rem Karla,sans-serif;cursor:pointer;display:grid;gap:.3rem;justify-items:center}
-.cats button:hover{transform:translateY(-3px)}.cats svg{width:52px;height:38px}
-h3.cat{text-align:center;font-size:1.5rem;margin:3rem 0 1.5rem}
-.card{text-decoration:none;display:block;position:relative;text-align:center;transition:transform .3s cubic-bezier(.3,1.4,.5,1)}
-.card:hover{transform:translateY(-4px)}
-.card .ph{aspect-ratio:1.15;border-radius:6px}
-.card .ph svg{width:70%}
-.rt{position:absolute;top:.5rem;right:.5rem;background:var(--tan);color:var(--ink);font-size:.78rem;font-weight:700;padding:.1rem .5rem;border-radius:4px;z-index:2}
-.card h4{font-size:1rem;margin:.7rem 0 .15rem}.card span{color:var(--soft);font-size:.92rem}
+<style>
+/* =========================================
+   SAKURA BENTO - NEW VISUAL THEME
+   Japanese Warm Vintage Aesthetic
+========================================= */
 
-/* detail */
-.crumb{font-size:.85rem;padding:.8rem 0;background:var(--brown);color:var(--on)}
-.crumb a{opacity:.8;text-decoration:none}
-.dt{display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(1.5rem,5vw,4rem);align-items:start}
-.dt h1{font-size:clamp(1.7rem,3.4vw,2.4rem)}
-.dt .pr{display:flex;align-items:center;justify-content:space-between;margin:1.3rem 0}
-.dt .pr b{font:700 1.7rem "Playfair Display",serif}
-.dt .rt{position:static;font-size:.9rem}
-.or{text-align:center;margin:1.4rem 0 1rem;color:var(--soft)}
-.ol{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem}
-.ol a{text-decoration:none;background:var(--tan);border-radius:8px;padding:1rem .5rem;text-align:center;font-weight:700;font-size:.95rem;border:1px solid var(--line);transition:transform .25s}
-.ol a:hover{transform:translateY(-2px)}
-.ol small{display:block;font-weight:400;color:var(--soft)}
-
-/* contact */
-.fm{max-width:760px;margin:0 auto;background:var(--tan);border-radius:8px;padding:1.6rem;display:grid;grid-template-columns:1fr 1.2fr;gap:1.1rem 1.5rem}
-.fm label{display:grid;gap:.3rem;font-weight:500;font-size:.9rem}
-.fm .L{display:grid;gap:1.1rem;align-content:start}
-.fm textarea{min-height:100%;height:100%;resize:vertical}
-input,textarea{font:inherit;background:var(--bg);color:var(--ink);border:1px solid transparent;border-radius:4px;padding:.65rem .8rem;width:100%}
-input:focus,textarea:focus{outline:none;border-color:var(--wine)}
-.err{color:var(--wine);font-size:.8rem;min-height:1em;font-weight:400}
-.fm .btn{grid-column:1/-1;justify-self:center}
-.wa{display:flex;justify-content:center;margin:0 auto;width:fit-content;border:2px solid #25a05a;color:#1c7d45;background:rgba(37,160,90,.08);padding:.6rem 1.4rem;border-radius:6px;text-decoration:none;font-weight:700;gap:.5rem;align-items:center}
-.map{max-width:760px;margin:0 auto;aspect-ratio:2/1;border-radius:8px;border:1px solid var(--line);position:relative;overflow:hidden;background:#e9e1d0;display:grid;place-items:center}
-.map svg{position:absolute;inset:0;width:100%;height:100%}
-.map .btn{position:relative}
-
-footer{background:var(--brown);color:var(--on);padding:2.6rem 0 calc(1.4rem + env(safe-area-inset-bottom,0px));font-size:.88rem}
-.fg{display:grid;grid-template-columns:1.4fr 1fr 1.2fr 1fr;gap:2rem}
-footer h4{font:700 .95rem Karla,sans-serif;margin-bottom:.7rem}
-footer a{display:block;text-decoration:none;opacity:.8;margin-bottom:.3rem}footer p{opacity:.8}
-.cp{text-align:center;opacity:.6;margin-top:2rem;font-size:.8rem}
-.sprig{position:absolute;pointer-events:none;width:clamp(160px,22vw,300px);z-index:1;opacity:.85}
-.sprig.l{left:-20px;bottom:-30px;transform:scaleX(-1)}.sprig.r{right:-20px;bottom:-30px}.sprig.t{right:-20px;top:-10px;transform:rotate(14deg)}
-.pg{animation:fade2 .6s ease both}@keyframes fade2{from{opacity:0}}
-.z{position:relative;z-index:2}
-
-@media(max-width:900px){
- #bt{display:block}
- nav ul{position:absolute;top:calc(58px + env(safe-area-inset-top,0px));left:0;right:0;flex-direction:column;gap:0;background:var(--brown);padding:.4rem 1.25rem 1rem;display:none}
- nav ul.open{display:flex}nav ul a{display:block;padding:.7rem .6rem}
- .g3{grid-template-columns:repeat(2,1fr)}
- .g3.sc3{grid-template-columns:1fr}
- .fg{grid-template-columns:1fr 1fr}
- #slot{opacity:.8;right:-12%}
+/* PAPER KUTO FONT */
+@font-face {
+  font-family: "Paper Kuto";
+  src: url("./PaperKuto-Regular.ttf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
-@media(max-width:700px){
- .row,.dt{grid-template-columns:1fr}.row.rev>:first-child{order:0}
- .wood h3,.wood p{text-align:left;margin-left:0}.wood .tr{text-align:left}
- .fm{grid-template-columns:1fr}.fm textarea{min-height:130px}
- .g3.q{grid-template-columns:1fr}
- .map{aspect-ratio:1.3}
- .ol{grid-template-columns:1fr}
+
+/* COLOR PALETTE */
+:root,
+:root:not([data-theme="light"]),
+:root[data-theme="dark"] {
+  --bg: #FFF2DF;
+  --ink: #44251C;
+  --soft: #806356;
+
+  --tan: #F1D5AD;
+  --wine: #963923;
+  --brown: #3B1A12;
+  --on: #FFF5E8;
+  --line: rgba(68, 37, 28, .15);
+
+  --cream: #FFF2DF;
+  --peach: #F4D4B1;
+  --brick: #963923;
+  --sage: #E5E4BF;
+  --blush: #F1D0CC;
+  --orange: #E6B477;
+
+  color-scheme: light;
 }
-@media(prefers-reduced-motion:reduce){#petals{display:none}*{animation-duration:.01ms!important;animation-delay:0s!important}html{scroll-behavior:auto}}
+
+/* GLOBAL */
+html {
+  background: var(--cream);
+}
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: "Karla", sans-serif;
+}
+
+/* TYPOGRAPHY */
+h1,
+h2,
+h3,
+h4,
+.logo {
+  font-family: "Paper Kuto", "Playfair Display", Georgia, serif;
+  font-weight: 400;
+  line-height: 1.2;
+  letter-spacing: .01em;
+}
+
+h1 {
+  font-size: clamp(2rem, 4.5vw, 3.4rem);
+}
+
+h2.c {
+  text-align: left;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  margin-bottom: 1.8rem;
+}
+
+h3.cat {
+  text-align: left;
+  font-size: 1.65rem;
+  margin: 0 0 1.5rem;
+}
+
+p {
+  line-height: 1.75;
+}
+
+/* =========================================
+   HEADER & NAVIGATION
+========================================= */
+
+header {
+  background: var(--cream);
+  color: var(--ink);
+  border-bottom: 1px solid var(--line);
+  box-shadow: 0 3px 14px rgba(59, 26, 18, .06);
+}
+
+header.sc {
+  box-shadow: 0 8px 24px rgba(59, 26, 18, .12);
+}
+
+nav {
+  min-height: 66px;
+  height: auto;
+}
+
+.logo {
+  color: var(--ink);
+  font-size: 1.15rem;
+}
+
+.logo svg {
+  background: var(--peach);
+}
+
+nav ul a {
+  color: var(--ink);
+  font-family: "Karla", sans-serif;
+  font-weight: 500;
+  font-size: .88rem;
+  opacity: 1;
+}
+
+nav ul a:hover {
+  background: rgba(150, 57, 35, .08);
+}
+
+nav ul a::after {
+  background: var(--brick);
+}
+
+nav ul a.on {
+  background: var(--brick);
+  color: white;
+}
+
+nav ul a[data-r="contact"] {
+  background: var(--brick);
+  color: white;
+}
+
+nav ul a[data-r="contact"]:hover {
+  background: #742719;
+}
+
+#bt {
+  color: var(--ink);
+  border-color: var(--brick);
+}
+
+/* =========================================
+   HERO / PAGE BANNER
+========================================= */
+
+.ban {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      circle at 75% 40%,
+      rgba(180, 103, 72, .36) 0 14%,
+      transparent 14.5%
+    ),
+    radial-gradient(
+      circle at 90% 70%,
+      rgba(210, 159, 105, .3) 0 8%,
+      transparent 8.5%
+    ),
+    linear-gradient(
+      115deg,
+      #28120D,
+      #653326 55%,
+      #24100C
+    );
+}
+
+.ban::after {
+  background: linear-gradient(
+    90deg,
+    rgba(30, 12, 8, .78),
+    rgba(30, 12, 8, .2)
+  );
+}
+
+.ban h1 {
+  color: #FFF1DD;
+}
+
+.ban p {
+  color: #FFF1DD;
+}
+
+.ban.big {
+  min-height: min(560px, 78dvh);
+}
+
+/* =========================================
+   BUTTONS
+========================================= */
+
+.btn {
+  background: var(--brick);
+  color: #FFF5E8;
+  border-radius: 5px;
+  padding: .75rem 1.5rem;
+  font-family: "Karla", sans-serif;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(59, 26, 18, .12);
+}
+
+.btn:hover {
+  background: #742719;
+  filter: none;
+}
+
+.btn.t {
+  background: var(--tan);
+  color: var(--ink);
+}
+
+.btn.t:hover {
+  background: #E6BC87;
+}
+
+/* =========================================
+   HOME PAGE
+========================================= */
+
+/* Story section */
+body[data-page="home"] .pg > section:nth-of-type(1) {
+  background: var(--peach);
+}
+
+/* Feature section */
+.wood {
+  position: relative;
+  background: var(--brick);
+  color: #FFF2DF;
+}
+
+.wood::before {
+  content: "";
+  position: absolute;
+  height: 14px;
+  top: -13px;
+  left: 0;
+  right: 0;
+  background:
+    radial-gradient(
+      circle at 10px 0,
+      var(--brick) 10px,
+      transparent 10.8px
+    ) 0 0 / 20px 14px repeat-x;
+}
+
+.wood h3,
+.wood p {
+  color: #FFF2DF;
+}
+
+.wood .btn {
+  background: var(--tan);
+  color: var(--ink);
+}
+
+/* Testimonials */
+.wood + section {
+  background: var(--sage);
+}
+
+/* =========================================
+   ABOUT PAGE
+========================================= */
+
+body[data-page="about"] .pg > section:nth-of-type(1) {
+  background: var(--blush);
+}
+
+body[data-page="about"] .pg > section:nth-of-type(2) {
+  background: var(--brown);
+  color: var(--on);
+}
+
+body[data-page="about"] .pg > section:nth-of-type(2) p {
+  color: #E8D3C0;
+}
+
+body[data-page="about"] .pg > section:nth-of-type(3) {
+  background: var(--cream);
+}
+
+/* =========================================
+   MENU PAGE
+========================================= */
+
+.cats {
+  justify-content: flex-start;
+  gap: .8rem;
+  margin-bottom: 2rem;
+}
+
+.cats button {
+  flex: 1;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  font-family: "Karla", sans-serif;
+  font-weight: 700;
+  padding: .8rem 1rem;
+}
+
+.cats button svg {
+  width: 36px;
+  height: 30px;
+}
+
+.cats button:nth-child(1) {
+  background: var(--brick);
+  color: white;
+  border-color: var(--brick);
+}
+
+.cats button:nth-child(2) {
+  background: var(--orange);
+  color: var(--ink);
+  border-color: var(--orange);
+}
+
+.cats button:nth-child(3) {
+  background: var(--sage);
+  color: var(--ink);
+  border-color: var(--sage);
+}
+
+/* Menu category backgrounds */
+.menu-band {
+  padding: 2rem;
+  margin: 1.5rem 0;
+  border-radius: 7px;
+}
+
+.menu-band.bento {
+  background: var(--peach);
+}
+
+.menu-band.donburi {
+  background: var(--sage);
+}
+
+.menu-band.others {
+  background: var(--blush);
+}
+
+/* Food cards */
+.card {
+  background: white;
+  border-radius: 6px;
+  padding-bottom: .9rem;
+  overflow: hidden;
+  box-shadow: 0 3px 12px rgba(59, 26, 18, .07);
+}
+
+.card .ph {
+  border-radius: 5px 5px 0 0;
+  aspect-ratio: 1.3;
+}
+
+.card h4 {
+  color: var(--ink);
+  padding-inline: .6rem;
+  font-size: 1.08rem;
+}
+
+.card span:not(.rt) {
+  color: var(--soft);
+}
+
+.card .rt {
+  background: var(--cream);
+  color: var(--brick);
+}
+
+/* =========================================
+   DETAIL MENU
+========================================= */
+
+.crumb {
+  background: var(--cream);
+  color: var(--soft);
+  border-bottom: 1px solid var(--line);
+}
+
+.crumb a {
+  color: var(--brick);
+}
+
+.dt h1 {
+  color: var(--ink);
+}
+
+.dt .pr b {
+  color: var(--brick);
+}
+
+.ol a {
+  background: white;
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+
+.ol a:hover {
+  background: var(--peach);
+}
+
+/* =========================================
+   TESTIMONIAL CARDS
+========================================= */
+
+.bx {
+  background: white;
+  color: var(--ink);
+  border-radius: 6px;
+  border: 1px solid rgba(68, 37, 28, .07);
+}
+
+.bx p {
+  color: var(--soft);
+}
+
+.st {
+  color: #D59A36;
+}
+
+/* =========================================
+   CONTACT PAGE
+========================================= */
+
+body[data-page="contact"] .pg > section {
+  background: var(--sage);
+}
+
+.fm {
+  background: white;
+  border-radius: 7px;
+  padding: 1.8rem;
+  box-shadow: 0 5px 20px rgba(59, 26, 18, .06);
+}
+
+input,
+textarea {
+  background: var(--cream);
+  border: 1px solid rgba(68, 37, 28, .12);
+  border-radius: 4px;
+  color: var(--ink);
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--brick);
+}
+
+.fm label {
+  color: var(--ink);
+}
+
+.map {
+  background: var(--peach);
+  border: 1px solid var(--line);
+}
+
+/* =========================================
+   FOOTER
+========================================= */
+
+footer {
+  position: relative;
+  background: var(--brown);
+  color: #FFF2DF;
+  padding-top: 3rem;
+}
+
+footer::before {
+  content: "";
+  position: absolute;
+  height: 14px;
+  top: -13px;
+  left: 0;
+  right: 0;
+  background:
+    radial-gradient(
+      circle at 10px 0,
+      var(--brown) 10px,
+      transparent 10.8px
+    ) 0 0 / 20px 14px repeat-x;
+}
+
+footer h4 {
+  color: #EBC79D;
+}
+
+footer a {
+  color: #FFF2DF;
+}
+
+footer .cp {
+  color: #D5B7A2;
+}
+
+/* =========================================
+   PETALS & DECORATIONS
+========================================= */
+
+#intro {
+  background: var(--cream);
+}
+
+#intro p {
+  font-family: "Paper Kuto", serif;
+  color: var(--brick);
+}
+
+#petals i {
+  background: #E9A5A7;
+}
+
+/* Mobile navigation */
+@media(max-width: 900px) {
+  nav ul {
+    background: var(--cream);
+    border-top: 1px solid var(--line);
+  }
+
+  nav ul a {
+    color: var(--ink);
+  }
+
+  .menu-band {
+    padding: 1.2rem;
+  }
+}
+
+@media(max-width: 700px) {
+  .cats {
+    gap: .4rem;
+  }
+
+  .cats button {
+    padding: .65rem .4rem;
+    font-size: .83rem;
+  }
+
+  .menu-band {
+    padding: 1rem;
+  }
+
+  .ban h1 {
+    max-width: 90%;
+  }
+}
 </style>
+ 
 </head>
 <body>
 <svg class="defs" aria-hidden="true"><defs>
@@ -272,11 +748,52 @@ about:()=>`${ban("About Us")}
  <div class="bx sc"><svg viewBox="-20 -20 40 40"><circle r="16" fill="#6b0f14"/><use href="#fl" transform="scale(1.6)"/></svg><h4>Made for Your Day</h4><p>Disiapkan segar setiap hari untuk menemani aktivitasmu.</p></div>
  <div class="bx sc"><svg viewBox="0 0 80 80"><circle cx="40" cy="26" r="13" fill="#e9b88f"/><path d="M14 74c2-22 14-30 26-30s24 8 26 30z" fill="#6b0f14"/></svg><h4>Friendly &amp; Fresh</h4><p>Pelayanan ramah dan terbuka terhadap masukan.</p></div></div></div></section>`,
 
-menu:()=>{const cs=[["Bento","Bento Package"],["Donburi","Donburi"],["Others","Others"]];
- return `${ban("Let's Explore the Menu")}<section><svg class="sprig l tree still" data-g="5" data-sp="14" aria-hidden="true"></svg><div class="w z"><h2 class="c">Choose Your Fave!</h2>
- <div class="cats">${cs.map(c=>`<button data-go="c-${c[0]}"><svg viewBox="0 0 76 60"><use href="#bx"/></svg>${c[0]}</button>`).join("")}</div>
- ${cs.map(c=>`<h3 class="cat" id="c-${c[0]}">${c[1]}</h3><div class="g3">${D.filter(m=>m.c===c[0]).map(card).join("")}</div>`).join("")}</div></section>`},
 
+menu:()=> {
+  const cs = [
+    ["Bento", "Bento Package"],
+    ["Donburi", "Donburi"],
+    ["Others", "Others"]
+  ];
+
+  return `${ban("Let's Explore the Menu")}
+  <section>
+    <svg class="sprig l tree still"
+      data-g="5" data-sp="14"
+      aria-hidden="true"></svg>
+
+    <div class="w z">
+      <h2 class="c">Choose Your Fave!</h2>
+
+      <div class="cats">
+        ${cs.map(c => `
+          <button data-go="c-${c[0]}">
+            <svg viewBox="0 0 76 60">
+              <use href="#bx"/>
+            </svg>
+            ${c[0]}
+          </button>
+        `).join("")}
+      </div>
+
+      ${cs.map(c => `
+        <div class="menu-band ${c[0].toLowerCase()}">
+
+          <h3 class="cat" id="c-${c[0]}">
+            ${c[1]}
+          </h3>
+
+          <div class="g3">
+            ${D.filter(m => m.c === c[0])
+              .map(card).join("")}
+          </div>
+
+        </div>
+      `).join("")}
+
+    </div>
+  </section>`;
+},
 detail:m=>{const o=D.filter(x=>x.s!==m.s&&x.c===m.c).concat(D.filter(x=>x.c!==m.c)).slice(0,3);
  return `<div class="crumb"><div class="w"><a href="#/">Home</a> / <a href="#/menu">Menu</a> / ${m.n}</div></div>
  <section><svg class="sprig t tree still" data-g="5" data-sp="10" aria-hidden="true"></svg><div class="w z"><div class="dt">${img(m.k)}<div>
@@ -343,6 +860,9 @@ let first=true;
 function route(){
  const h=(location.hash||"#/").slice(2).split("/"),m=h[0]==="menu"&&h[1]&&D.find(x=>x.s===h[1]);
  const k=m?"detail":(R[h[0]||"home"]?(h[0]||"home"):"home");
+
+ document.body.dataset.page = k;
+
  app.innerHTML=`<div class="pg">${R[k](m)}</div>`;
  document.querySelectorAll("nav ul a").forEach(a=>a.classList.toggle("on",a.dataset.r===(k==="detail"?"menu":k)));
  app.querySelectorAll("svg[data-g]").forEach(s=>grow(s,false,+s.dataset.g));
